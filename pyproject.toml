@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "darmstadt"
+version = "0.3"
+description = "A controller for containers running remotely."
+
+readme = 'README.md'
+
+authors = ["Mark Perryman <mark.perryman@microsoft.com>"]
+
+keywords = []
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+# For `tox` testing, you must provide all test requirements as optional
+# requirements in `dependencies` and in `extras.test` section.
+# For testing via `poetry run pytest` they must also be as mandatory
+# requirements in `dev-dependencies`.
+pytest = { version = "^6.2.5", optional = true }
+pytest-subtests = { version = "^0.2.1", optional = true }
+coverage = { version = "^4.5.4", optional = true }
+pytest-cov = { version = "^2.8.1", optional = true }
+
+# REAL DEPENDENCIES
+fabric = "^2.6.0"
+invoke = "^1.6.0"
+docker = "^5.0.3"
+ruff = "^0.4.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+pytest-subtests = "^0.2.1"
+coverage = "^4.5.4"
+pytest-cov = "^2.8.1"
+mypy = "^0.790"
+
+[tool.poetry.extras]
+# For `tox` testing, you must provide all test requirements as optional
+# requirements in `dependencies` and in `extras.test` section.
+# For testing via `poetry run pytest` they must also be as mandatory
+# requirements in `dev-dependencies`.
+test = ["pytest", "pytest-subtests", "pytest-cov", "coverage"]
+
+[tool.pytest]
+mock_use_standalone_module = true
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.messages_control]
+# Ignore test code as pylint doesn't get along with pytest fixtures very well.
+# These patterns are applied per-file and cannot be applied to entire directories.
+ignore-patterns = "test.*,.*test,conftest.py"
